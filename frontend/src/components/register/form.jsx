@@ -30,7 +30,7 @@ const Form = () => {
     setLoading(false);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/users/signup",
+        "https://subid-das-dobby.onrender.com/api/users/signup",
         data
       );
       const { authToken } = res.data;

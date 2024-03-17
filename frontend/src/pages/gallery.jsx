@@ -19,10 +19,13 @@ const Gallery = () => {
   }, [debouncedSearch]);
   const getImages = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/images/search", {
-        params: { q: debouncedSearch },
-        headers: { "auth-token": getCookie("token") },
-      });
+      const res = await axios.get(
+        "https://subid-das-dobby.onrender.com/api/images/search",
+        {
+          params: { q: debouncedSearch },
+          headers: { "auth-token": getCookie("token") },
+        }
+      );
       setImages(res.data);
     } catch (error) {
       console.error(error);
@@ -34,11 +37,15 @@ const Gallery = () => {
     const formData = new FormData();
     formData.append("file", files[0]);
     try {
-      await axios.post("http://localhost:3000/api/images/upload", formData, {
-        headers: {
-          "auth-token": getCookie("token"),
-        },
-      });
+      await axios.post(
+        "https://subid-das-dobby.onrender.com/api/images/upload",
+        formData,
+        {
+          headers: {
+            "auth-token": getCookie("token"),
+          },
+        }
+      );
       getImages();
     } catch (error) {
       console.log(error);
