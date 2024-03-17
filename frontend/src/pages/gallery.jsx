@@ -67,14 +67,18 @@ const Gallery = () => {
         </button>
       </div>
       <Dropzone onDrop={handleImage} />
-      <div className="columns-2">
+      <div className="grid sm:grid-cols-2 gap-2 mb-4">
         {loading ? (
           <LoaderIcon size="3rem" />
         ) : (
           Array.isArray(images) &&
           images?.map((image, index) => (
             <div key={index} className="image-container">
-              <img className="rounded-lg" src={image.path} alt={image.name} />
+              <img
+                className="rounded-lg w-full h-full object-cover"
+                src={image.path}
+                alt={image.name}
+              />
             </div>
           ))
         )}

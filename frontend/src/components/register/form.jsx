@@ -44,7 +44,7 @@ const Form = () => {
   };
 
   return (
-    <div className="h-full col-span-4 bg-default">
+    <div className="h-screen w-screen sm:h-full sm:w-auto sm:col-span-4 bg-default">
       <div className="container-custom-xs flex h-full flex-col justify-center gap-6">
         <div className="upper">
           <h2 className="font-montserrat text-4xl font-bold">Register</h2>
