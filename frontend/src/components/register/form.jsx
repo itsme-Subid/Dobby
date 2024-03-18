@@ -27,7 +27,7 @@ const Form = () => {
     resolver: zodResolver(formSchema),
   });
   const handleClick = async (data) => {
-    setLoading(false);
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://subid-das-dobby.onrender.com/api/users/signup",
