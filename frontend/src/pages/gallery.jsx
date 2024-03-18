@@ -11,13 +11,14 @@ const Gallery = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   useEffect(() => {
-    setLoading(true);
     getImages();
   }, [debouncedSearch]);
   const getImages = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(
         "https://subid-das-dobby.onrender.com/api/images/search",
@@ -34,6 +35,7 @@ const Gallery = () => {
     }
   };
   const handleImage = async (files) => {
+    setUploading(true);
     const formData = new FormData();
     formData.append("file", files[0]);
     try {
@@ -49,6 +51,8 @@ const Gallery = () => {
       getImages();
     } catch (error) {
       console.log(error);
+    } finally {
+      setUploading(false);
     }
   };
   return (
@@ -73,23 +77,31 @@ const Gallery = () => {
           Logout
         </button>
       </div>
-      <Dropzone onDrop={handleImage} />
-      <div className="grid sm:grid-cols-2 gap-2 mb-4">
-        {loading ? (
+      {uploading ? (
+        <div className="flex justify-center my-4">
           <LoaderIcon size="3rem" />
-        ) : (
-          Array.isArray(images) &&
-          images?.map((image, index) => (
-            <div key={index} className="image-container">
-              <img
-                className="rounded-lg w-full h-full object-cover"
-                src={image.path}
-                alt={image.name}
-              />
-            </div>
-          ))
-        )}
-      </div>
+        </div>
+      ) : (
+        <Dropzone onDrop={handleImage} />
+      )}
+      {loading ? (
+        <div className="flex justify-center">
+          <LoaderIcon size="3rem" />
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 gap-2 mb-4">
+          {Array.isArray(images) &&
+            images?.map((image, index) => (
+              <div key={index} className="image-container">
+                <img
+                  className="rounded-lg w-full h-full bg-gray-300 object-cover"
+                  src={image.path}
+                  alt={image.name}
+                />
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 };
