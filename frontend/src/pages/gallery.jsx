@@ -92,12 +92,19 @@ const Gallery = () => {
         <div className="grid sm:grid-cols-2 gap-2 mb-4">
           {Array.isArray(images) &&
             images?.map((image, index) => (
-              <div key={index} className="image-container">
+              <div key={index} className="image-container relative">
                 <img
                   className="rounded-lg w-full h-full bg-gray-300 object-cover"
                   src={image.path}
                   alt={image.name}
                 />
+                <span
+                  className="absolute bottom-2 left-2 text-white text-sm bg-black/50 px-2 py-1 rounded-lg max-w-[3rem]  line-clamp-1"
+                  title={image.name}
+                  style={{ backdropFilter: "blur(10px)" }}
+                >
+                  {image.name}
+                </span>
               </div>
             ))}
         </div>
